@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
 
         <ListBox Grid.Column="0">
-            
+
         </ListBox>
         <ListBox Grid.Column="1">
             

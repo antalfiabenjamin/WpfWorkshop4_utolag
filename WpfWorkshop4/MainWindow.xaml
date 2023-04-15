@@ -21,7 +21,7 @@
             <ColumnDefinition Width="53*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox x:Name="lb_racers" Grid.Column="0" ItemsSource="{Binding Racers}" HorizontalContentAlignment="Stretch">
+        <ListBox x:Name="lb_racers" Grid.Column="0" ItemsSource="{Binding Racers}" SelectedItem="{Binding SelectedFromList}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1">
@@ -30,11 +30,17 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox Grid.Column="1" ItemsSource="{Binding SelectedToRace}">
-            
+        <ListBox Grid.Column="1" ItemsSource="{Binding Participants}" SelectedItem="{Binding SelectedToRace}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Column="2">
-            <Button Content="Load" Padding="10" Margin="10" FontSize="16"/>
+            <Button Content="Load" Command="{Binding LoadRacers}" Padding="5" Margin="5" FontSize="14"/>
+            <Button Content="Add to Race" Command="{Binding AddToRace}" Padding="5" Margin="5" FontSize="14"/>
+            <Button Content="Remove from Race" Command="{Binding RemoveFromRace}" Padding="5" Margin="5" FontSize="14"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -7,6 +7,20 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="54*"/>
+            <ColumnDefinition Width="53*"/>
+        </Grid.ColumnDefinitions>
 
+        <ListBox Grid.Column="0">
+            
+        </ListBox>
+        <ListBox Grid.Column="1">
+            
+        </ListBox>
+        <StackPanel Grid.Column="2">
+            <Button Content="Load" Padding="10" Margin="10" FontSize="16"/>
+        </StackPanel>
     </Grid>
 </Window>

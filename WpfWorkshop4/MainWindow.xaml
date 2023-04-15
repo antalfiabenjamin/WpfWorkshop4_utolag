@@ -4,8 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfWorkshop4"
+        xmlns:vms="clr-namespace:WpfWorkshop4.ViewModels"
+        xmlns:helpers="clr-namespace:WpfWorkshop4.Helpers"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Racer Dashboard" Height="450" Width="800">
+    <Window.DataContext>
+        <vms:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <helpers:BoolToColorConverter x:Key="booltocolor"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="53*"/>
@@ -13,10 +21,16 @@
             <ColumnDefinition Width="53*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Column="0">
-
+        <ListBox x:Name="lb_racers" Grid.Column="0" ItemsSource="{Binding Racers}" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Label Content="{Binding Name}" FontWeight="Bold" Background="{Binding HasPermission, Converter={StaticResource booltocolor}}"/>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox Grid.Column="1">
+        <ListBox Grid.Column="1" ItemsSource="{Binding SelectedToRace}">
             
         </ListBox>
         <StackPanel Grid.Column="2">

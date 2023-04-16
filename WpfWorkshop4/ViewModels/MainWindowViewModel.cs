@@ -21,6 +21,11 @@ namespace WpfWorkshop4.ViewModels
         public ObservableCollection<Racer> Racers { get; set; }
         public ObservableCollection<Racer> Participants { get; set; }
 
+        public int ParticipantCount
+        {
+            get { return logic.ParticipantCount; }
+        }
+
         private Racer selectedFromList;
 
         public Racer SelectedFromList
@@ -95,8 +100,14 @@ namespace WpfWorkshop4.ViewModels
 
             SaveRace = new RelayCommand(
                 () => logic.SaveRace(),
-                () => Participants.Count != 0
+                () => ParticipantCount != 0
             );
+
+            Messenger.Register<MainWindowViewModel, string, string>(this, "RacerInfo", (recipient, msg) =>
+            {
+                OnPropertyChanged("ParticipantCount");
+                (SaveRace as RelayCommand)?.NotifyCanExecuteChanged();
+            });
         }
     }
 }

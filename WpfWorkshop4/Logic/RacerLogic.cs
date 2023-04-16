@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,9 @@ namespace WpfWorkshop4.Logic
         IList<Racer>? racers;
         IList<Racer>? participants;
 
-        IMessenger messenger;
+        readonly IMessenger messenger;
+
+        public int ParticipantCount { get { return participants.Count; } }
 
         public RacerLogic(IMessenger messenger)
         {
@@ -58,10 +61,11 @@ namespace WpfWorkshop4.Logic
 
         public void SaveRace()
         {
-            string path = "PéldaVerseny_" + DateTime.Now;
+            string path = "PéldaVerseny_" + DateTime.Today.ToString("ddMMyyyy") + ".json";
             string jsonContent = JsonConvert.SerializeObject(participants, Formatting.Indented);
 
             File.WriteAllText(path, jsonContent);
+            MessageBox.Show($"Race saved to {path}", "Race Saved", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

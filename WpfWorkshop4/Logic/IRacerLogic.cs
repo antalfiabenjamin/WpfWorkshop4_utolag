@@ -5,6 +5,7 @@ namespace WpfWorkshop4.Logic
 {
     public interface IRacerLogic
     {
+        int ParticipantCount { get; }
         void AddToRace(Racer racer);
         void RemoveFromRace(Racer racer);
         void SetupCollections(IList<Racer> racers, IList<Racer> participants);

@@ -30,6 +30,7 @@ namespace WpfWorkshop4.ViewModels
             { 
                 SetProperty(ref selectedFromList, value);
                 (AddToRace as RelayCommand)?.NotifyCanExecuteChanged();
+                (ShowRacerDetails as RelayCommand)?.NotifyCanExecuteChanged();
             }
         }
 
@@ -47,6 +48,8 @@ namespace WpfWorkshop4.ViewModels
         public ICommand LoadRacers { get; set; }
         public ICommand AddToRace { get; set; }
         public ICommand RemoveFromRace { get; set; }
+        public ICommand ShowRacerDetails { get; set; }
+        public ICommand SaveRace { get; set; }
 
         public MainWindowViewModel() :this(IsInDesignMode ? null : Ioc.Default.GetService<IRacerLogic>())
         {
@@ -83,6 +86,16 @@ namespace WpfWorkshop4.ViewModels
             LoadRacers = new RelayCommand(
                 () => logic.LoadRacers(),
                 () => Racers.Count() == 0
+            );
+
+            ShowRacerDetails = new RelayCommand(
+                () => logic.ShowDetails(SelectedFromList),
+                () => SelectedFromList != null
+            );
+
+            SaveRace = new RelayCommand(
+                () => logic.SaveRace(),
+                () => Participants.Count != 0
             );
         }
     }

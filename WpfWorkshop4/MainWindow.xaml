@@ -39,8 +39,10 @@
         </ListBox>
         <StackPanel Grid.Column="2">
             <Button Content="Load" Command="{Binding LoadRacers}" Padding="5" Margin="5" FontSize="14"/>
-            <Button Content="Add to Race" Command="{Binding AddToRace}" Padding="5" Margin="5" FontSize="14"/>
+            <Button Content="Add to race" Command="{Binding AddToRace}" Padding="5" Margin="5" FontSize="14"/>
             <Button Content="Remove from Race" Command="{Binding RemoveFromRace}" Padding="5" Margin="5" FontSize="14"/>
+            <Button Content="Show details" Command="{Binding ShowRacerDetails}" Padding="5" Margin="5" FontSize="14"/>
+            <Button Content="Save race" Command="{Binding SaveRace}" Padding="5" Margin="5" FontSize="14"/>
         </StackPanel>
     </Grid>
 </Window>

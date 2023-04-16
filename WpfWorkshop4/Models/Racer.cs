@@ -19,7 +19,7 @@ namespace WpfWorkshop4.Models
         { 
             get 
             {
-                return PB * YB;    
+                return Math.Round(PB * YB, 2);    
             } 
         }
 

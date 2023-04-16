@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfWorkshop4.Models;
+using WpfWorkshop4.ViewModels;
 
 namespace WpfWorkshop4
 {
@@ -19,9 +21,11 @@ namespace WpfWorkshop4
     /// </summary>
     public partial class RacerDataWindow : Window
     {
-        public RacerDataWindow()
+        public RacerDataWindow(Racer racer)
         {
             InitializeComponent();
+            DataContext = new RacerDetailViewModel();
+            (DataContext as RacerDetailViewModel)?.Setup(racer);
         }
     }
 }

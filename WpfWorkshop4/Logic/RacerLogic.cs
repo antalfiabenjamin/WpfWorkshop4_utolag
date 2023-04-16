@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +49,19 @@ namespace WpfWorkshop4.Logic
         {
             participants?.Remove(racer);
             messenger.Send("Racer removed", "RacerInfo");
+        }
+
+        public void ShowDetails(Racer racer)
+        {
+            new RacerDataWindow(racer).Show();
+        }
+
+        public void SaveRace()
+        {
+            string path = "PéldaVerseny_" + DateTime.Now;
+            string jsonContent = JsonConvert.SerializeObject(participants, Formatting.Indented);
+
+            File.WriteAllText(path, jsonContent);
         }
     }
 }

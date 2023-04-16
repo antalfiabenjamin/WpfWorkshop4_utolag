@@ -4,9 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfWorkshop4"
+        xmlns:vms="clr-namespace:WpfWorkshop4.ViewModels"
+        xmlns:helpers="clr-namespace:WpfWorkshop4.Helpers"
         mc:Ignorable="d"
-        Title="RacerDataWindow" Height="350" Width="400">
+        Title="RacerDataWindow" Height="300" Width="400">
+    <Window.Resources>
+        <helpers:BoolToStringConverter x:Key="booltostring"/>
+    </Window.Resources>
     <Grid>
-        
+        <StackPanel>
+            <StackPanel Margin="10">
+                <Label Content="{Binding Actual.Name}" FontSize="18"/>
+                <Label Content="{Binding Actual.HasPermission, Converter={StaticResource booltostring}}" ContentStringFormat="Has racing permission: {0}"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Margin="10">
+                <StackPanel>
+                    <Label Content="Other Details" FontWeight="DemiBold"/>
+                    <Label Content="{Binding Actual.PB}" ContentStringFormat="Personal Best: {0}"/>
+                    <Label Content="{Binding Actual.YB}" ContentStringFormat="Yearly Best: {0}"/>
+                    <Label Content="{Binding Actual.Club}" ContentStringFormat="Club: {0}"/>
+                    <Label Content="{Binding Actual.Number}" ContentStringFormat="Number: {0}"/>
+                    <Label Content="{Binding Actual.MarketValue}" ContentStringFormat="Market value: {0}$"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
     </Grid>
 </Window>

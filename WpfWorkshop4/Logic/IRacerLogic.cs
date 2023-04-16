@@ -9,5 +9,7 @@ namespace WpfWorkshop4.Logic
         void RemoveFromRace(Racer racer);
         void SetupCollections(IList<Racer> racers, IList<Racer> participants);
         void LoadRacers();
+        void ShowDetails(Racer racer);
+        void SaveRace();
     }
 }

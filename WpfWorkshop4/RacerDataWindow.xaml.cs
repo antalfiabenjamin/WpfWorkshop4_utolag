@@ -10,21 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WpfWorkshop4
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for RacerDataWindow.xaml
+    /// </summary>
+    public partial class RacerDataWindow : Window
     {
-        public MainWindow()
+        public RacerDataWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

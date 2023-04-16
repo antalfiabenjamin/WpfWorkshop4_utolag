@@ -1,18 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using WpfWorkshop4.Logic;
 using WpfWorkshop4.Models;
 
 namespace WpfWorkshop4.ViewModels
 {
     class MainWindowViewModel : ObservableRecipient
     {
+        IRacerLogic logic;
         public ObservableCollection<Racer> Racers { get; set; }
         public ObservableCollection<Racer> Participants { get; set; }
 
@@ -24,7 +29,7 @@ namespace WpfWorkshop4.ViewModels
             set 
             { 
                 SetProperty(ref selectedFromList, value);
-                (AddToRace as RelayCommand).NotifyCanExecuteChanged();
+                (AddToRace as RelayCommand)?.NotifyCanExecuteChanged();
             }
         }
 
@@ -36,32 +41,48 @@ namespace WpfWorkshop4.ViewModels
             set 
             { 
                 SetProperty(ref selectedToRace, value);
-                (RemoveFromRace as RelayCommand).NotifyCanExecuteChanged();
+                (RemoveFromRace as RelayCommand)?.NotifyCanExecuteChanged();
             }
         }
-
         public ICommand LoadRacers { get; set; }
         public ICommand AddToRace { get; set; }
         public ICommand RemoveFromRace { get; set; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel() :this(IsInDesignMode ? null : Ioc.Default.GetService<IRacerLogic>())
         {
-            Participants = new ObservableCollection<Racer>();
-            Racers = new ObservableCollection<Racer>
+            
+        }
+
+        public static bool IsInDesignMode
+        {
+            get
             {
-                new Racer("John Adams", 17.3, 16.4, true, "Chicago Bulls", 7),
-                new Racer("Thomas Jenkins", 18.9, 15.1, false, "Chicago Bulls", 14),
-                new Racer("Josh Williams", 14.1, 12.5, true, "Lakers", 77)
-            };
+                var prop = DesignerProperties.IsInDesignModeProperty;
+                return (bool)DependencyPropertyDescriptor.FromProperty(prop, typeof(FrameworkElement)).Metadata.DefaultValue;
+            }
+        }
+
+        public MainWindowViewModel(IRacerLogic logic)
+        {
+            this.logic = logic;
+            Participants = new ObservableCollection<Racer>();
+            Racers = new ObservableCollection<Racer>();
+
+            logic.SetupCollections(Racers, Participants);
 
             AddToRace = new RelayCommand(
-                () => Participants.Add(SelectedFromList),
+                () => logic.AddToRace(SelectedFromList),
                 () => SelectedFromList != null
             );
 
             RemoveFromRace = new RelayCommand(
-                () => Participants.Remove(SelectedToRace),
+                () => logic.RemoveFromRace(SelectedToRace),
                 () => SelectedToRace != null
+            );
+
+            LoadRacers = new RelayCommand(
+                () => logic.LoadRacers(),
+                () => Racers.Count() == 0
             );
         }
     }
